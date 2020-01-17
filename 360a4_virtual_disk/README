@@ -1,0 +1,49 @@
+CSC 360 Assignment 
+			Final Celebration: FILE SYSTEMS!!! :)
+
+Xu Wang 
+/////////////////////////////////////////////////////////
+			
+			Description for vdisk environment
+
+VDISK 
+    size: 2,097,152 bytes (2MB)
+    4096 blocks
+    512 byes for a block
+
+Block 0
+    first 4 bytes: magic number => 6666
+·   next 4 bytes: number of blocks on disk => 4096
+·   next 4 bytes: number of inodes for disk => 255
+
+Block 1
+    4096 bits indicate available blocks, bit must be set to 1.
+    First 10 blocks are unavailable.
+    bin: 
+   	0000 0000 0011 1111 1111 1111 1111 ...
+
+    I create an inode for root directory "/" in Block 2, then apply an available block for root directory block (Block 10). Then apply a block for 16 inodes of the root directory block.
+
+///////////////////////////////////////////////////////////////////////////////
+
+			Functionality
+
+	In the apps folder, I create 3 functions
+1.  write: 
+	It can write the file "helloWorld.txt" file into vdisk, with the content 
+	"Hello World!\n123456789\nabcdefghijklmnopqrstuvwxyz\0".
+	Process:
+		create a block for content
+		write the file name and unique inode number in the root block
+		write the inode refered by unique inode number
+
+2.  read:
+	It can read the file "helloWorld.txt" and print it out.
+
+3.  delete:
+	It can delete the file "helloWorld.txt" from vdisk.
+
+When there is no available block, no the file "helloWorld.txt", the vdisk will print statements.
+	
+
+
