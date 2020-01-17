@@ -1,0 +1,18 @@
+Total:13
+
+Enter your *valid* move>1
+Human's left: 12
+
+Computer's left: 9
+
+Enter your *valid* move>1
+Human's left: 8
+
+Computer's left: 5
+
+Enter your *valid* move>1
+Human's left: 4
+
+Computer's left: 1
+
+Computer wins!
