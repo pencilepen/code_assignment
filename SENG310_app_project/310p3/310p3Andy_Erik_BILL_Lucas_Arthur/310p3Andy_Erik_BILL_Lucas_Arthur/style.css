@@ -1,0 +1,63 @@
+body{
+  background-image: url("http://www.jituwang.com/uploads/allimg/160409/257841-16040912202244.jpg");
+}
+
+.left_link,.right_maintext{
+    float: left;
+    padding: 16px;
+    margin:0px;
+}
+.q3_t,.q3_p{
+  float: left;
+  padding: 0px;
+}
+
+.left_link{
+  width:30%;
+  text-align:center;
+}
+
+.right_maintext{
+  width:60%;
+}
+
+.qc_p{
+  width:10%;
+  height:370px;
+}
+
+.q3_t{
+  width:30%;
+  height:370px;
+  text-align:left;
+}
+
+.q3_picture{
+  width:60%;
+  height:60%;
+}
+
+.mockup_img{
+  width:50%;
+  height:50%;
+}
+
+ul{
+  list-style-type: none;
+}
+
+a:link {
+  color: black;
+  background-color: white;
+  text-decoration: none;
+}
+
+a:hover{
+  color: white;
+  background-color: black;
+  text-decoration: none;
+}
+
+a:visited{
+  color: grey
+}
