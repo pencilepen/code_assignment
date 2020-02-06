@@ -1,10 +1,4 @@
-/*
- * Name: Andy Xu
- * ID: V00804737
- * Date: 2nd Apr 2018
- * Filename: Heap.java
- * Details: \CSC115\ Assignment <5>
- */
+
 
 import java.util.List;
 import java.util.ArrayList;
