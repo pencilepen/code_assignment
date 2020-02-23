@@ -234,7 +234,7 @@ int main(int argc, char **argv)
 
 	strcat(node_path_kapishrc, "/.kapishrc");
 
-	FILE *fp = fopen(node_path_kapishrc,"r");
+	FILE *fp = fopen(node_path_kapishrc,"r");//no matter, just for easy to test
 	if(fp==NULL){
 		perror("-kapish");
 	}
