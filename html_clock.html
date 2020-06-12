@@ -1,0 +1,206 @@
+<!--BUG: This neeeds to refresh  
+         canvas' center is missed-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        *{margin:0;
+        padding:0;
+        }
+        html,body{
+            width:100%;
+            height:100%;
+            background:#000;
+            /* overflow: hidden; /*  Disable scrollbars */   
+            /* display: block;  /* No floating content on sides */
+            color:white;
+
+
+        }
+        /*#canvas{
+            background:#ddd;
+            display:block;
+        }
+*/
+        @media only screen and (max-width: 600px){
+            body{
+                background-color: olive;
+            }
+        }
+    </style>
+</head>
+<body>
+<script>
+    //get window size
+    var w = window.innerWidth
+     || document.documentElement.clientWidth
+     || document.body.clientWidth;
+     var h = window.innerHeight
+     || document.documentElement.clientHeight
+     || document.body.clientHeight;
+
+</script>
+    <canvas id ="canvas"  style="position:absolute; background-color:#333;"></canvas>
+    <!--<canvas id ="canvas" width=1440 height=770 style="background-color:#333"></canvas>-->
+    <!--<canvas id ="canvas" width=w height=h style="background-color:#333"></canvas>-->
+    
+    
+    <p id = "digital_time"></p>
+    <p id = "text1"></p>
+    <p id ="size"></p>
+ <script>
+     
+     // create canvas
+     var canvas=document.getElementById("canvas");
+     var ctx = canvas.getContext("2d");
+     var radius; //= canvas.height/2;
+     var time=Date();
+
+     initialize();//start listening to resize eventsand draw canvas.
+
+     if(canvas.height<canvas.width){
+         radius=canvas.height/2;
+     }else{
+         radius=canvas.width/2;
+     }
+
+     //ctx.translate(canvas.width/2,radius);
+     radius=radius*0.9;
+   
+     setInterval(drawClock,1000);
+     setInterval(digital_time,1000);
+
+     function initialize(){
+         // Register an event listener to call the resizeCanvas() function 
+           // each time the window is resized.
+        window.addEventListener('resize', resizeCanvas, false);
+        // Draw canvas border for the first time.
+        resizeCanvas();
+     }
+     // Display custom canvas. And to resize along with the browser window.
+     /*function redraw(){ //BUG!!!!!!!!
+        if(canvas.height<canvas.width){
+         radius=canvas.height/2;
+     }else{
+         radius=canvas.width/2;
+     }
+         drawClock();
+     }*/
+     // Runs each time the DOM window resize event fires.
+        // Resets the canvas dimensions to match window,
+        // then draws the new borders accordingly.
+     function resizeCanvas(){
+         canvas.width = window.innerWidth;
+         canvas.height = window.innerHeight;
+         //redraw();
+         if(canvas.height<canvas.width){
+            radius=canvas.height/2;
+        }else{
+            radius=canvas.width/2;
+        }
+        ctx.translate(canvas.width/2,radius);
+        radius=radius*0.9;
+     }
+
+     function digital_time(){
+         var time=Date();
+         document.getElementById("digital_time").innerHTML="Time: "+time;
+     }
+
+     function drawClock(){
+         ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
+         //ctx.translate(canvas.width/2,radius);
+         drawFace(ctx, radius);
+         drawNumbers(ctx,radius);
+         drawTime(ctx,radius,time);
+     }
+
+     function drawFace(ctx,radius){
+        var grad;
+        ctx.beginPath();
+         //clock face
+         ctx.arc(0,0,radius,0,2*Math.PI);
+         ctx.fillStyle="white";
+         ctx.fill();
+         //ctx.strokeStyle="white";
+         //ctx.stroke();
+         grad=ctx.createRadialGradient(0,0,radius*0.95, 0,0,radius*1.05);
+         grad.addColorStop(0,'#333');
+         //grad.addColorStop(0.5,'white');
+         //grad.addColorStop(1,'#333');
+         grad.addColorStop(1,'white');
+         ctx.strokeStyle=grad;
+         ctx.lineWidth=radius*0.1;
+         ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(0,0,radius*0.1, 0,2*Math.PI);
+        ctx.fillStyle="#333";
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(0,0,radius*0.12,0,2*Math.PI);
+        ctx.strokeStyle="black";
+        ctx.lineWidth=radius*0.01;
+        ctx.stroke();
+     }
+
+     function drawNumbers(ctx,radius){
+         var ang;
+         var num;
+
+         ctx.font=radius*0.15 + "px arial";
+         ctx.textBaseline="middle";
+         ctx.textAlign="center";
+
+        for(num=1;num<=12;num++){
+         ang=num*(Math.PI/6);
+         ctx.rotate(ang);
+         ctx.translate(0,-radius*0.85);
+         ctx.rotate(-ang);
+         ctx.fillStyle="black";
+         ctx.fillText(num.toString(),0,0);
+         ctx.rotate(ang);
+         ctx.translate(0,radius*0.85);
+         ctx.rotate(-ang);
+         }
+         
+     }
+
+     function drawTime(ctx,radius){
+         var time=new Date();
+         var hour=time.getHours();
+         var minute = time.getMinutes();
+         var second=time.getSeconds();
+
+         second  = (second*Math.PI/30);
+         drawHand(ctx,second,radius*0.91,radius*0.02);
+
+         minute=(minute*Math.PI/30)+(second*Math.PI/(30*60));
+         drawHand(ctx,minute,radius*0.75,radius*0.07);
+
+         hour =(hour*Math.PI/6)+(minute*Math.PI/(6*60))+(second*Math.PI/(6*60*60));
+         drawHand(ctx,hour,radius*0.5,radius*0.1);
+
+     }
+
+     function drawHand(ctx,pos,length,width){
+         //pos=10*Math.PI/30;
+        ctx.beginPath();
+        ctx.lineWidth=width;
+        ctx.lineCap = "round";
+        ctx.moveTo(0,0);
+        ctx.rotate(pos);
+        ctx.lineTo(0, -length);
+        ctx.strokeStyle="#333";
+        ctx.stroke();
+        ctx.rotate(-pos);
+
+     }
+    document.getElementById("text1").innerHTML="Radius: "+radius+" Start Time: "+time;
+    document.getElementById("size").innerHTML="Width: "+w+"  Heigth: "+h;
+ </script>
+
+
+ </body>
+</html>
